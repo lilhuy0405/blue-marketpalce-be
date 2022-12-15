@@ -41,6 +41,7 @@ export default class MarketService {
   }
 
   saveUser(user: User): Promise<User> {
+    user.address = user.address.toLowerCase();
     return this.userRepository.save(user);
   }
 

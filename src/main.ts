@@ -42,12 +42,14 @@ app.get('/api/nfts/:address', async (req, res) => {
         message: 'Invalid address'
       })
     }
-    const user = await marketService.getUserByAddress(address);
+    const user = await marketService.getUserByAddress(address.toLowerCase());
     if (!user) {
       const newUser = new User();
       newUser.address = address;
       await marketService.saveUser(newUser);
-      return res.json([]);
+      return res.json({
+        data: []
+      });
     }
     const nft = user.NFTs;
     const dto = nft.map(n => {
@@ -56,7 +58,9 @@ app.get('/api/nfts/:address', async (req, res) => {
         tokenURI: n.tokenURI
       }
     })
-    return res.json(dto);
+    return res.json({
+      data: dto
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send({
