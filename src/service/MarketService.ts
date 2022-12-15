@@ -77,6 +77,6 @@ export default class MarketService {
   }
 
   subscribeNFTTransfer() {
-    this.blueNftContract.subscribeEvent('Transfer', this.handleNFTTransfer);
+    this.blueNftContract.subscribeEvent('Transfer', this.handleNFTTransfer.bind(this));
   }
 }
